@@ -13,13 +13,12 @@ pipeline {
         }
 
         stage('Install Dependencies') {
-    steps {
-        dir('expense') {
-            bat "npm install"
+            steps {
+                dir('expense') {
+                    bat "npm install"
+                }
+            }
         }
-    }
-}
-
 
         stage('Build') {
             steps {
@@ -31,8 +30,10 @@ pipeline {
 
         stage('Archive') {
             steps {
-                // If React, use build/**; if Angular/Vue, use dist/**
-                archiveArtifacts artifacts: 'dist/**, build/**', fingerprint: true
+                dir('expense') {
+                    // Archive only the build output folder
+                    archiveArtifacts artifacts: 'dist/**', fingerprint: true
+                }
             }
         }
     }
