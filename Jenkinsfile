@@ -13,14 +13,19 @@ pipeline {
         }
 
         stage('Install Dependencies') {
-            steps {
-                bat "npm install"
-            }
+    steps {
+        dir('expense') {
+            bat "npm install"
         }
+    }
+}
+
 
         stage('Build') {
             steps {
-                bat "npm run build"
+                dir('expense') {
+                    bat "npm run build"
+                }
             }
         }
 
