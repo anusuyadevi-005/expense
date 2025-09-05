@@ -14,25 +14,20 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                dir('expense') {
-                    bat "npm install"
-                }
+                bat "npm install"
             }
         }
 
         stage('Build') {
             steps {
-                dir('expense') {
-                    bat "npm run build"
-                }
+                bat "npm run build"
             }
         }
 
         stage('Archive') {
             steps {
-                dir('expense') {
-                    archiveArtifacts artifacts: 'dist/**', fingerprint: true
-                }
+                // If React, use build/**; if Angular/Vue, use dist/**
+                archiveArtifacts artifacts: 'dist/**, build/**', fingerprint: true
             }
         }
     }
